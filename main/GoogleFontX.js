@@ -1,5 +1,3 @@
-import React, { useEffect } from 'react';
-
 const useLoadFonts = () => {
   useEffect(() => {
     const fontElements = document.querySelectorAll("[class*='font-']");
