@@ -5,9 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
     fontElements.forEach(element => {
         element.classList.forEach(cls => {
             if (cls.startsWith('gfont-')) {
-                const [fontNamePart, weightPart] = cls.replace('gfont-', '').split(/-(\d+)?$/);
-                const fontName = fontNamePart.replace(/-/g, ' ');
-                const fontWeight = weightPart ? weightPart : '400';
+                const parts = cls.replace('gfont-', '').split('-');
+                const fontWeight = parts.pop() || '400';
+                const fontName = parts.join(' ').replace(/-/g, ' ');
 
                 if (!fonts.has(fontName)) {
                     fonts.set(fontName, new Set());
@@ -25,11 +25,14 @@ document.addEventListener("DOMContentLoaded", () => {
         let currentImport = [];
 
         fonts.forEach((weights, fontName) => {
+            const weightsParam = `:wght@${Array.from(weights).join(';')}`;
+            const familyParam = `family=${fontName.replace(/ /g, '+')}${weightsParam}`;
+            currentImport.push(familyParam);
+
             if (currentImport.length >= maxFontsPerImport) {
                 fontImportParts.push(currentImport);
                 currentImport = [];
             }
-            currentImport.push(`family=${fontName.replace(/ /g, '+')}`);
         });
 
         if (currentImport.length > 0) {
@@ -44,12 +47,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         fonts.forEach((weights, fontName) => {
+            const baseClassName = 'font-' + fontName.replace(/ /g, '-');
             weights.forEach(weight => {
-                const className = 'font-' + fontName.replace(/ /g, '-');
                 if (weight === '400') {
-                    fontCss += `.${className} { font-family: '${fontName}'; font-weight: 400; }\n`;
+                    fontCss += `.${baseClassName} { font-family: '${fontName}'; font-weight: 400; }\n`;
                 } else {
-                    fontCss += `.${className}-${weight} { font-family: '${fontName}'; font-weight: ${weight}; }\n`;
+                    fontCss += `.${baseClassName}-${weight} { font-family: '${fontName}'; font-weight: ${weight}; }\n`;
                 }
             });
         });
@@ -58,3 +61,4 @@ document.addEventListener("DOMContentLoaded", () => {
         document.head.appendChild(style);
     }
 });
+
