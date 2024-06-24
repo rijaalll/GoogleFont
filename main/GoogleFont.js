@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const fontElements = document.querySelectorAll("[class*='font-']");
+    const fontElements = document.querySelectorAll("[class*='gfont-']");
     const fonts = new Map();
 
     fontElements.forEach(element => {
         element.classList.forEach(cls => {
-            if (cls.startsWith('font-')) {
-                const [fontNamePart, weightPart] = cls.replace('font-', '').split(/-(\d+)?$/);
+            if (cls.startsWith('gfont-')) {
+                const [fontNamePart, weightPart] = cls.replace('gfont-', '').split(/-(\d+)?$/);
                 const fontName = fontNamePart.replace(/-/g, ' ');
                 const fontWeight = weightPart ? weightPart : '400';
 
