@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         fonts.forEach((weights, fontName) => {
-            const baseClassName = 'font-' + fontName.replace(/ /g, '-');
+            const baseClassName = 'gfont-' + fontName.replace(/ /g, '-');
             weights.forEach(weight => {
                 if (weight === '400') {
                     fontCss += `.${baseClassName} { font-family: '${fontName}'; font-weight: 400; }\n`;
