@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-            const fontElements = document.querySelectorAll("[class*='font-']");
+            const fontElements = document.querySelectorAll("[class*='gfont-']");
             const fonts = new Set();
 
             fontElements.forEach(element => {
                 element.classList.forEach(cls => {
-                    if (cls.startsWith('font-')) {
-                        const fontName = cls.replace('font-', '').replace(/-/g, ' ');
+                    if (cls.startsWith('gfont-')) {
+                        const fontName = cls.replace('gfont-', '').replace(/-/g, ' ');
                         fonts.add(fontName);
                     }
                 });
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
 
                 fonts.forEach(fontName => {
-                    const className = 'font-' + fontName.replace(/ /g, '-');
+                    const className = 'gfont-' + fontName.replace(/ /g, '-');
                     fontCss += `.${className} { font-family: '${fontName}'; }\n`;
                 });
 
